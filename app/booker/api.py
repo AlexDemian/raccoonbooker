@@ -1,11 +1,13 @@
 from rest_framework import viewsets
 from booker.models import FinanceSheetEntry, FinanceCategory, FinanceRow, FinanceSheet
 from booker.serializers import FinanceSheetEntryApiSerializer, FinanceCategoryApiSerializer, FinanceRowApiSerializer, FinanceSheetApiSerializer
-from rest_framework.decorators import action
+from django_filters.rest_framework import DjangoFilterBackend
 
 class FinanceEntryViewSet(viewsets.ModelViewSet):
     model = FinanceSheetEntry
     serializer_class = FinanceSheetEntryApiSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['period',]
 
     def get_queryset(self):
         return FinanceSheetEntry.objects.filter(
