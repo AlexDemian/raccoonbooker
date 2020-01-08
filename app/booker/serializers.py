@@ -34,15 +34,6 @@ class FinanceRowApiSerializer(serializers.ModelSerializer):
             'name': instance.category.name,
         }
 
-    def save(self):
-        instance = super(FinanceRowApiSerializer, self).save()
-        if instance.category.positive:
-            instance.amount = abs(instance.amount)
-        else:
-            instance.amount = -abs(instance.amount)
-        instance.save()
-        return instance
-
 
 class FinanceCategoryApiSerializer(serializers.ModelSerializer):
 

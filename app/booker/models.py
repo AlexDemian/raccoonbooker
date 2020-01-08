@@ -28,13 +28,39 @@ class FinanceSheetEntry(models.Model):
 
 
 class FinanceRow(models.Model):
-    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     category = models.ForeignKey(FinanceCategory, on_delete=models.CASCADE)
     entry = models.ForeignKey(FinanceSheetEntry, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
-    description = models.CharField(null=True, blank=True, max_length=200)
+    description = models.CharField(blank=True, max_length=200)
     pinned = models.BooleanField(default=False)
     amount = models.FloatField()
+    origin_amount = models.FloatField()
+    deleted = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'booker_rows'
+
+    def save(self, *args, **kwargs):
+        first_save = self.pk is None
+        if first_save:
+            self.origin_amount = self.amount
+
+        if self.category.positive:
+            self.amount = abs(self.amount)
+        else:
+            self.amount = -abs(self.amount)
+
+        return super(FinanceRow, self).save(*args, **kwargs)
+
+
+class Wish(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.CharField(blank=True, max_length=200)
+    sheet = models.ForeignKey(FinanceSheet, on_delete=models.CASCADE, null=True)
+    balance = models.FloatField(default=0)
+    amount = models.FloatField()
+    deleted = models.BooleanField(default=False)
+    expected_date =  models.DateField()
+
+    class Meta:
+        db_table = 'booker_wishlist'

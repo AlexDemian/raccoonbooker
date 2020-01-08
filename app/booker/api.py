@@ -28,7 +28,7 @@ class FinanceRowViewSet(viewsets.ModelViewSet):
     serializer_class = FinanceRowApiSerializer
 
     def get_queryset(self):
-        return FinanceRow.objects.filter(user=self.request.user)
+        return FinanceRow.objects.filter(entry__sheet__user=self.request.user)
 
 
 class FinanceSheetViewSet(viewsets.ModelViewSet):
