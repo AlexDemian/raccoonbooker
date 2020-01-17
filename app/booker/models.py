@@ -54,9 +54,10 @@ class FinanceRow(models.Model):
 
 
 class Wish(models.Model):
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    sheet = models.ForeignKey(FinanceSheet, on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=100)
     description = models.CharField(blank=True, max_length=200)
-    sheet = models.ForeignKey(FinanceSheet, on_delete=models.CASCADE, null=True)
     balance = models.FloatField(default=0)
     amount = models.FloatField()
     deleted = models.BooleanField(default=False)

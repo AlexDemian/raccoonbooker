@@ -2,8 +2,9 @@ import factory
 from booker.models import FinanceSheet, FinanceCategory, FinanceSheetEntry, FinanceRow, Wish
 from django.contrib.auth import get_user_model
 import random
-import time
+import names
 import datetime
+import time
 
 class UserFactory(factory.django.DjangoModelFactory):
     password = '123'
@@ -11,6 +12,9 @@ class UserFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = get_user_model()
 
+    @factory.lazy_attribute
+    def username(self):
+        return '{}_{}'.format(names.get_first_name(), int(time.time()))
 
 class FinanceSheetFactory(factory.django.DjangoModelFactory):
     user = factory.SubFactory(UserFactory)
@@ -49,11 +53,15 @@ class FinanceRowFactory(factory.django.DjangoModelFactory):
 
 
 class WishFactory(factory.django.DjangoModelFactory):
+    user = factory.SubFactory(UserFactory)
     name = 'New car'
     description = 'Cool red funny car!'
     sheet = factory.SubFactory(FinanceSheetFactory)
     amount = 18500
-    expected_date = datetime.datetime.now() + datetime.timedelta(days=180)
+
+    @factory.lazy_attribute
+    def expected_date(self):
+        return datetime.datetime.now() + datetime.timedelta(days=180)
 
     class Meta:
         model = Wish
@@ -67,7 +75,7 @@ class BaseContentFactory:
         categories = [
             FinanceCategoryFactory.create(
                 sheet=sheet,
-                name='New laptop'
+                name='Technical needs'
             ),
             FinanceCategoryFactory.create(
                 sheet=sheet,
@@ -78,10 +86,10 @@ class BaseContentFactory:
         entry = FinanceSheetEntryFactory.create(sheet=sheet)
         activities = [
             FinanceRowFactory.create(
-                name='new fucking necklace',
+                name='New laptop',
                 category=categories[0],
                 entry=entry,
-                amount=-100500,
+                amount=-1000,
             ),
             FinanceRowFactory.create(
                 name='Sallary',
@@ -90,6 +98,6 @@ class BaseContentFactory:
                 amount=100500,
             )
         ]
-        wish = WishFactory.create(sheet=sheet)
+        wish = WishFactory.create(sheet=sheet, user=user)
         return locals()
 

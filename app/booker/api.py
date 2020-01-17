@@ -7,7 +7,7 @@ class FinanceEntryViewSet(viewsets.ModelViewSet):
     model = FinanceSheetEntry
     serializer_class = FinanceSheetEntryApiSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['period',]
+    filterset_fields = ['period', 'sheet']
 
     def get_queryset(self):
         return FinanceSheetEntry.objects.filter(

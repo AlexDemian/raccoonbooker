@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from booker.models import FinanceSheetEntry, FinanceRow, FinanceCategory, FinanceSheet
+import datetime
+
 
 class FinanceSheetEntryApiSerializer(serializers.ModelSerializer):
 
@@ -15,8 +17,8 @@ class FinanceSheetEntryApiSerializer(serializers.ModelSerializer):
         many=True).data
 
     def to_representation(self, instance):
-        # Fix me, fails on detailed_route
-        #instance.period = instance.period.strftime("%B %Y")
+        if isinstance(instance.period, datetime.date):
+            instance.period = instance.period.strftime("%B %Y")
         return super(FinanceSheetEntryApiSerializer, self).to_representation(instance)
 
 
