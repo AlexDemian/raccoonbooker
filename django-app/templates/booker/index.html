@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<div align="center">
+    <h1>Welcome to RaccoonBooker!</h1>
+    <br>
+    <br>
+    <form method="POST" action="{% url 'base-content-generator' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">Run demo</button>
+    </form>
+    <app-root>Hi!</app-root>
+</div>
+{% endblock %}
