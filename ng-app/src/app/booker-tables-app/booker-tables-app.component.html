@@ -1,0 +1,3 @@
+Sample: {{ tables }}
+<app-booker-table *ngFor="let table of tables" [columns]="table_columns" [rows]="table.rows"></app-booker-table>
+<button class="btn btn-success" (click)="addTable();">Add table</button>
