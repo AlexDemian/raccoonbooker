@@ -13,7 +13,8 @@ export class BookerTableComponent implements OnInit {
   totalSum = 0;
   newRow = { "name": "", "value": 0 };
 
-  constructor() {}
+  constructor() {
+  }
 
   ngOnInit() {}
 

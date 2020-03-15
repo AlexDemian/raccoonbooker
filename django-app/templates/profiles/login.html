@@ -1,9 +1,38 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>Helloworld!</h1>
-    <br>
-    <form method="post" action="{% url 'base-content-generator' %}">
-        {% csrf_token %}
-        <button type="submit">Try demo now</button>
-    </form>
+    <div align="center" >
+        <h1>Welcome to raccoonbooker!</h1>
+        <br>
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+
+            <div class="form-group row">
+                <div class="col-lg-1 col-centered">
+                    <label for="id_name">Username</label>
+                    <input class="form-control" name="username" id="id_name" required>
+                </div>
+            <div>
+
+            <div class="form-group row">
+                <div class="col-lg-1">
+                    <label for="id_password">Password</label>
+                    <input class="form-control" name="password" type="password" id="id_password" required>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <button type="submit" class="btn btn-success">Sign In</button>
+            </div>
+
+        </form>
+
+        <form method="post" action="{% url 'base-content-generator' %}">
+            {% csrf_token %}
+
+            <div class="form-group row">
+                <button type="submit" class="btn btn-success">Try demo now</button>
+            </div>
+
+        </form>
+    </div>
 {% endblock %}

@@ -1,14 +1,21 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-<br>
-<br>
+<script src="{% static 'runtime-es2015.js' %}" type="module"></script>
+<script src="{% static 'runtime-es5.js' %}" nomodule defer></script>
+<script src="{% static 'polyfills-es5.js' %}" nomodule defer></script>
+<script src="{% static 'polyfills-es2015.js' %}" type="module"></script>
+<script src="{% static 'styles-es2015.js' %}" type="module"></script>
+<script src="{% static 'styles-es5.js' %}" nomodule defer></script>
+<script src="{% static 'vendor-es2015.js' %}" type="module"></script>
+<script src="{% static 'vendor-es5.js' %}" nomodule defer></script>
+<script src="{% static 'main-es2015.js' %}" type="module"></script>
+<script src="{% static 'main-es5.js' %}" nomodule defer></script>
+<script src="{% url 'js_reverse' %}" type="text/javascript"></script>
 <div align="center">
-    <h1>Welcome to RaccoonBooker!</h1>
-    <br>
-    <br>
     <form method="POST" action="{% url 'base-content-generator' %}">
         {% csrf_token %}
-        <button type="submit" class="btn btn-success">Run demo</button>
+        <button type="submit" class="btn btn-success">Run new demo session</button>
     </form>
     <app-root></app-root>
 </div>

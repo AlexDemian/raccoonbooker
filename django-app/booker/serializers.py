@@ -29,14 +29,14 @@ class FinanceRowApiSerializer(serializers.ModelSerializer):
         model = FinanceRow
         fields = '__all__'
 
-    category_props = serializers.SerializerMethodField()
+    category_name = serializers.SerializerMethodField()
+    category_positive = serializers.SerializerMethodField()
 
-    def get_category_props(self, instance):
-        return {
-            'positive': instance.category.positive,
-            'name': instance.category.name,
-        }
+    def get_category_name(self, instance):
+        return instance.category.name
 
+    def get_category_positive(self, instance):
+        return instance.category.positive
 
 class FinanceCategoryApiSerializer(serializers.ModelSerializer):
 

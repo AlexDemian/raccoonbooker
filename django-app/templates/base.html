@@ -9,30 +9,29 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" type="image/x-icon" href="favicon.ico">
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-        <script src="{% url 'js_reverse' %}" type="text/javascript"></script>
     </head>
 
     <body>
-
         <div>
             {% if user.is_authenticated %}
-                <p>Welcome, {{ request.user.username }}. Thanks for logging in.</p>
-            {% else %}
-                <p>Welcome, new user. Please log in.</p>
+                <div align="right">
+                    <p>
+                        Welcome, {{ request.user.username }} !
+                        <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success">Logout</button>
+                        </form>
+                    </p>
+                </div>
             {% endif %}
         </div>
-
+        <script>
+        function reverseUrl (url_name, args=[], kwargs={}) {
+            return Urls[url_name](...args, kwargs)
+        }
+        </script>
         {% block content %}
         {% endblock %}
-        <script src="{% static 'runtime-es2015.js' %}" type="module"></script>
-        <script src="{% static 'runtime-es5.js' %}" nomodule defer></script>
-        <script src="{% static 'polyfills-es5.js' %}" nomodule defer></script>
-        <script src="{% static 'polyfills-es2015.js' %}" type="module"></script>
-        <script src="{% static 'styles-es2015.js' %}" type="module"></script>
-        <script src="{% static 'styles-es5.js' %}" nomodule defer></script>
-        <script src="{% static 'vendor-es2015.js' %}" type="module"></script>
-        <script src="{% static 'vendor-es5.js' %}" nomodule defer></script>
-        <script src="{% static 'main-es2015.js' %}" type="module"></script>
-        <script src="{% static 'main-es5.js' %}" nomodule defer></script></body>
+        </body>
     </body>
 </html>

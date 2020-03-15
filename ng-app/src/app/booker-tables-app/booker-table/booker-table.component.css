@@ -5,5 +5,9 @@
 
 table {
     font-weight: bold;
+    width: 80%;
 }
 
+button {
+    margin-top: 3px;
+}

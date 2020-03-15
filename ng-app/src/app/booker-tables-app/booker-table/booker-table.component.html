@@ -1,4 +1,4 @@
-<table>
+<table class="table">
     <caption>List of activities</caption>
     <thead>
         <tr>
@@ -11,14 +11,14 @@
         <tr *ngFor="let row of rows; let index = index">
             <td>{{ index + 1 }}</td>
             <td *ngFor="let column of columns;">
-                <input [(ngModel)]="row[column.property]" type="{{ column.type }}" (keyup)="updateRow(row)">
+                <input [(ngModel)]="row[column.property]" type="{{ column.type }}" (keyup)="updateRow(row)" class="form-control">
             </td>
             <button class="btn btn-danger" (click)="removeRow(index)">Del</button>
         </tr>
         <tr class="new-row-tr">
             <td></td>
             <td *ngFor="let column of columns">
-                <input [(ngModel)]="newRow[column.property]" type="{{ column.type }}">
+                <input [(ngModel)]="newRow[column.property]" type="{{ column.type }}"  class="form-control">
             </td>
             <button class="btn btn-success" (click)="addRow()">Add</button>
         </tr>
