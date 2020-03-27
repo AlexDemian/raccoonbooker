@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 {% block content %}
 <script src="{% static 'runtime-es2015.js' %}" type="module"></script>
 <script src="{% static 'runtime-es5.js' %}" nomodule defer></script>
@@ -15,7 +16,7 @@
 <div align="center">
     <form method="POST" action="{% url 'base-content-generator' %}">
         {% csrf_token %}
-        <button type="submit" class="btn btn-success">Run new demo session</button>
+        <button type="submit" class="btn btn-success">{% trans 'Run new demo session' %}</button>
     </form>
     <app-root></app-root>
 </div>

@@ -1,4 +1,4 @@
-<app-booker-table *ngFor="let table of tables" [columns]="table_columns" [rows]="table.rows"></app-booker-table>
+<app-booker-table *ngFor="let entry of entries" [entry]="entry"></app-booker-table>
 <br>
 <br>
-<button class="btn btn-success" (click)="addTable();">Add table</button>
+<button class="btn btn-success" (click)="addEntrie();">Add table</button>

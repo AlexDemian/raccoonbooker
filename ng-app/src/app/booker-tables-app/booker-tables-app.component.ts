@@ -6,24 +6,17 @@ import { BookerEntriesAPI } from '../services/http';
   templateUrl: './booker-tables-app.component.html',
   styleUrls: ['./booker-tables-app.component.css']
 })
-export class BookerTablesAppComponent implements OnInit {
+export class BookerEntriesAppComponent implements OnInit {
   ngOnInit () {}
-  tables = [];
-  table_columns = [
-    { "label": "Name", "property":"name", "type": "text" },
-    { "label": "Desctipion", "property": "desctipion", "type": "text" },
-    { "label": "Category", "property": "category_name", "type": "text" },
-    { "label": "Amount", "property":"amount", "type": "number" },
-  ];
-
+  entries = [];
   constructor(private api: BookerEntriesAPI) {
     this.getEntries();
   }
 
   getEntries = () => {
-    this.api.getTables().subscribe(
+    this.api.getEntries().subscribe(
       data => {
-        this.tables = data;
+        this.entries = data;
         console.log(data);
       },
       error => {

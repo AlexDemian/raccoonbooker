@@ -1,30 +1,45 @@
 <table class="table">
-    <caption>List of activities</caption>
+    <caption>{{ entry.name }}</caption>
     <thead>
         <tr>
             <td>#</td>
-            <td *ngFor="let column of columns">{{ column.label }}</td>
+            <td>Name</td>
+            <td>Description</td>
+            <td>Category</td>
+            <td>Amount</td>
             <td>Action</td>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let row of rows; let index = index">
+        <tr *ngFor="let row of entry.rows; let index = index">
             <td>{{ index + 1 }}</td>
-            <td *ngFor="let column of columns;">
-                <input [(ngModel)]="row[column.property]" type="{{ column.type }}" (keyup)="updateRow(row)" class="form-control">
+            <td><input [(ngModel)]="row.name" (keyup)="updateRow(row)" class="form-control"></td>
+            <td><input [(ngModel)]="row.description" (keyup)="updateRow(row)" class="form-control"></td>
+            <td>
+                <select [(ngModel)]="row.category" class="form-control" (change)="updateRow(row)">
+                    <option *ngFor="let category of entry.categories" [selected]="category.id === row.category.id" [ngValue]="category.id">{{category.name}}</option>
+                </select>
             </td>
-            <button class="btn btn-danger" (click)="removeRow(index)">Del</button>
+            <td><input [(ngModel)]="row.amount" (keyup)="updateRow(row)" class="form-control"></td>
+            <td><button class="btn btn-danger" (click)="removeRow(index)">Del</button></td>
         </tr>
         <tr class="new-row-tr">
             <td></td>
-            <td *ngFor="let column of columns">
-                <input [(ngModel)]="newRow[column.property]" type="{{ column.type }}"  class="form-control">
+            <td><input [(ngModel)]="newRow.name" class="form-control"></td>
+            <td><input [(ngModel)]="newRow.description" class="form-control"></td>
+            <td>
+                <select [(ngModel)]="newRow.category" class="form-control">
+                    <option *ngFor="let category of entry.categories" [ngValue]="category.id">{{category.name}}</option>
+                </select>
             </td>
-            <button class="btn btn-success" (click)="addRow()">Add</button>
+            <td><input [(ngModel)]="newRow.amount" class="form-control"></td>
+            <td><button class="btn btn-success" (click)="addRow()">Add</button></td>
         </tr>
         <tr>
             <td></td>
             <td>Total:</td>
+            <td></td>
+            <td></td>
             <td>{{ totalSum }}</td>
             <td></td>
         <tr>

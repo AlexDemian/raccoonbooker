@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BookerTableComponent } from './booker-table.component';
+import { BookerEntrieComponent } from './booker-table.component';
 
-describe('BookerTableComponent', () => {
-  let component: BookerTableComponent;
-  let fixture: ComponentFixture<BookerTableComponent>;
+describe('BookerEntrieComponent', () => {
+  let component: BookerEntrieComponent;
+  let fixture: ComponentFixture<BookerEntrieComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BookerTableComponent ]
+      declarations: [ BookerEntrieComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BookerTableComponent);
+    fixture = TestBed.createComponent(BookerEntrieComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

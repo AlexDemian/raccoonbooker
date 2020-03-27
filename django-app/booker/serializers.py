@@ -10,10 +10,16 @@ class FinanceSheetEntryApiSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     rows = serializers.SerializerMethodField()
+    categories = serializers.SerializerMethodField()
 
     def get_rows(self, instance):
         return FinanceRowApiSerializer(
             FinanceRow.objects.filter(entry=instance),
+        many=True).data
+
+    def get_categories(self, instance):
+        return FinanceCategoryApiSerializer(
+            FinanceCategory.objects.filter(sheet=instance.sheet),
         many=True).data
 
     def to_representation(self, instance):
@@ -28,15 +34,15 @@ class FinanceRowApiSerializer(serializers.ModelSerializer):
     class Meta:
         model = FinanceRow
         fields = '__all__'
+        read_only_fields = ('origin_amount',)
 
-    category_name = serializers.SerializerMethodField()
-    category_positive = serializers.SerializerMethodField()
 
-    def get_category_name(self, instance):
-        return instance.category.name
-
-    def get_category_positive(self, instance):
-        return instance.category.positive
+    def to_representation(self, instance):
+        # ToDO: dirty code
+        category = FinanceCategoryApiSerializer(instance.category).data
+        data = super(FinanceRowApiSerializer, self).to_representation(instance)
+        data["category"] = category
+        return data
 
 class FinanceCategoryApiSerializer(serializers.ModelSerializer):
 

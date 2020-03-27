@@ -6,17 +6,18 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CategoriesTableComponent } from './categories-table/categories-table.component';
-import { BookerTablesAppComponent } from './booker-tables-app/booker-tables-app.component';
-import { BookerTableComponent } from './booker-tables-app/booker-table/booker-table.component';
+import { BookerEntriesAppComponent } from './booker-tables-app/booker-tables-app.component';
+import { BookerEntrieComponent } from './booker-tables-app/booker-table/booker-table.component';
 
 import { BookerEntriesAPI } from './services/http';
+import { CookieService } from "angular2-cookie/services/cookies.service";
 
 @NgModule({
   declarations: [
     AppComponent,
     CategoriesTableComponent,
-    BookerTablesAppComponent,
-    BookerTableComponent
+    BookerEntriesAppComponent,
+    BookerEntrieComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +25,7 @@ import { BookerEntriesAPI } from './services/http';
     FormsModule,
     AppRoutingModule
   ],
-  providers: [BookerEntriesAPI],
+  providers: [BookerEntriesAPI, CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
