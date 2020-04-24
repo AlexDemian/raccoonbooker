@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { BookerEntriesAPI } from '../../services/http';
+import { BookerEntriesAPI, Entry, EntryRow } from '../../services/http';
+
 
 @Component({
   selector: 'app-booker-table',
@@ -7,7 +8,7 @@ import { BookerEntriesAPI } from '../../services/http';
   styleUrls: ['./booker-table.component.css']
 })
 export class BookerEntrieComponent implements OnInit {
-  @Input('entry') entry = Object
+  @Input('entry') entry = Entry
 
   totalSum = 0;
   newRow = {
@@ -17,8 +18,12 @@ export class BookerEntrieComponent implements OnInit {
     "category": 0,
   };
 
+  filters = {
+    deleted: false
+  };
+
   constructor(private api: BookerEntriesAPI) {
-    console.log(this.entry)
+    this.entry['rows'] = this.entry['rows'] as EntryRow[];  
   }
 
   ngOnInit() {}
@@ -30,7 +35,7 @@ export class BookerEntrieComponent implements OnInit {
   calculateTotal() {
     this.totalSum = 0;
     for (let row of this.entry["rows"]) {
-      this.totalSum += row.amount;
+      this.totalSum += Number(row.amount); // Todo
     }
   }
 
@@ -38,7 +43,7 @@ export class BookerEntrieComponent implements OnInit {
     this.newRow["entry"] = this.entry["id"] // ToDo
     this.api.addRow(this.newRow).subscribe(
       data => {
-        this.entry["rows"].push(Object.assign({}, data));
+        this.entry["rows"].push(data as EntryRow);
         console.log(data);
       },
       error => {
@@ -49,9 +54,16 @@ export class BookerEntrieComponent implements OnInit {
 
   updateRow(row) {
     console.log('Updated: ', row);
+    row = this.api.updateRow(row).subscribe(
+      data => {
+        row = data as EntryRow;
+      },
+    )
   }
 
-  removeRow(index) {
-    this.entry["rows"].splice(index, 1);
+  removeRestoreRow(row) {
+    row.deleted = !row.deleted;
+    this.updateRow(row);
   }
+
 }

@@ -1,10 +1,27 @@
 {% extends 'base.html' %}
 {% load i18n %}
+{% load static %}
+
 {% block content %}
-    <div align="center" >
-        <h1>{% trans 'Welcome to' %} raccoonbooker!</h1>
+<style>
+    body {
+        background-image: url("{% static '/img/raccoons/success.jpg' %}");
+        background-repeat: no-repeat;
+        background-size:contain;
+    }
+
+    .login-block {
+        padding-left: 100px;
+        padding-right: 100px;
+        width: 400px;
+    }
+</style>
+
+<div align="center" >
+    <div class="login-block">
+        <h1>Raccoonbooker</h1>
         <br>
-        <div style="width: 200px">
+        <div class="form-group">
             <form method="post" action="{% url 'login' %}">
                 {% csrf_token %}
                 <label for="id_name">Email:</label>
@@ -12,16 +29,19 @@
                 <br>
                 <label for="id_password">Password:</label>
                 <input class="form-control" name="password" type="password" id="id_password" required>
+                <br>
+                <button type="submit" class="btn btn-success">{% trans 'Sign In' %}</button>
             </form>
         </div>
+        <span>-- {% trans 'OR' %} --</span>
         <br>
-        <form method="post" action="{% url 'base-content-generator' %}">
-            {% csrf_token %}
-            <div class="form-group row">
-                <button type="submit" class="btn btn-success">{% trans 'Sign In' %}</button>
-                <br>-- {% trans 'OR' %} --<br>
+        <br>
+        <div class="form-group">
+            <form method="post" action="{% url 'base-content-generator' %}">
+                {% csrf_token %}
                 <button type="submit" class="btn btn-success">{% trans 'Try demo now' %}</button>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
+</div>
 {% endblock %}

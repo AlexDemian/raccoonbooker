@@ -33,8 +33,8 @@ class FinanceRow(models.Model):
     name = models.CharField(max_length=100)
     description = models.CharField(blank=True, max_length=200)
     pinned = models.BooleanField(default=False)
-    amount = models.FloatField()
-    origin_amount = models.FloatField()
+    amount = models.DecimalField(decimal_places=2, max_digits=20)
+    origin_amount = models.DecimalField(decimal_places=2, max_digits=20)
     deleted = models.BooleanField(default=False)
 
     class Meta:
@@ -58,8 +58,8 @@ class Wish(models.Model):
     sheet = models.ForeignKey(FinanceSheet, on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=100)
     description = models.CharField(blank=True, max_length=200)
-    balance = models.FloatField(default=0)
-    amount = models.FloatField()
+    balance = models.DecimalField(default=0, decimal_places=2, max_digits=20)
+    amount = models.DecimalField(decimal_places=2, max_digits=20)
     deleted = models.BooleanField(default=False)
     expected_date =  models.DateField()
 

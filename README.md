@@ -11,8 +11,8 @@ python manage.py runserver
 # Angular
 ```sh
 cd ng-app
-apt-get install npm
+sudo apt-get install npm
 npm install -g @angular/cli
-npm install --save-dev @angular-devkit/build-angular
+npm install
 ng build
 ```

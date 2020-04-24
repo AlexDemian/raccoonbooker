@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BookerEntriesAPI } from '../services/http';
+import { BookerEntriesAPI, Entry, EntryRow } from '../services/http';
 
 @Component({
   selector: 'app-booker-tables-app',
@@ -8,21 +8,10 @@ import { BookerEntriesAPI } from '../services/http';
 })
 export class BookerEntriesAppComponent implements OnInit {
   ngOnInit () {}
-  entries = [];
+  
+  entries: Entry [] = [];
+  
   constructor(private api: BookerEntriesAPI) {
-    this.getEntries();
+    this.api.getEntries().subscribe( data => { this.entries = data as Entry[] });
   }
-
-  getEntries = () => {
-    this.api.getEntries().subscribe(
-      data => {
-        this.entries = data;
-        console.log(data);
-      },
-      error => {
-        console.log(error);
-      }
-    );
-  }
-
 }

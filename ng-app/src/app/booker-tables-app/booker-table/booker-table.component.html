@@ -1,5 +1,10 @@
 <table class="table">
-    <caption>{{ entry.name }}</caption>
+    <caption>
+        <div style="width: 200px;"> 
+            <input class="form-control" [(ngModel)]="entry.name"/>
+            <button class="btn btn-info" (click)="filters.deleted = !filters.deleted">{{ filters.deleted ? 'Active' : 'Removed' }}</button>
+        </div>
+    </caption>
     <thead>
         <tr>
             <td>#</td>
@@ -11,17 +16,21 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let row of entry.rows; let index = index">
+        <tr *ngFor="let row of entry.rows | filterObjectsByProperty:'deleted':filters.deleted; let index = index">
             <td>{{ index + 1 }}</td>
-            <td><input [(ngModel)]="row.name" (keyup)="updateRow(row)" class="form-control"></td>
-            <td><input [(ngModel)]="row.description" (keyup)="updateRow(row)" class="form-control"></td>
+            <td><input [(ngModel)]="row.name" (input)="updateRow(row)" class="form-control"></td>
+            <td><input [(ngModel)]="row.description" (input)="updateRow(row)" class="form-control"></td>
             <td>
                 <select [(ngModel)]="row.category" class="form-control" (change)="updateRow(row)">
-                    <option *ngFor="let category of entry.categories" [selected]="category.id === row.category.id" [ngValue]="category.id">{{category.name}}</option>
+                    <option *ngFor="let category of entry.categories"  [selected]="category.id === row.category.id" [ngValue]="category.id">{{category.name}}</option>
                 </select>
             </td>
-            <td><input [(ngModel)]="row.amount" (keyup)="updateRow(row)" class="form-control"></td>
-            <td><button class="btn btn-danger" (click)="removeRow(index)">Del</button></td>
+            <td><input [(ngModel)]="row.amount" (input)="updateRow(row)" class="form-control" type="number" step="0.01" floatField></td>
+            <td>
+                <button class="btn" [ngClass]="[filters.deleted ? 'btn-success': 'btn-danger']" (click)="removeRestoreRow(row)">
+                    {{ filters.deleted ? 'Restore' : 'Remove' }}
+                </button>
+            </td>
         </tr>
         <tr class="new-row-tr">
             <td></td>
@@ -32,7 +41,7 @@
                     <option *ngFor="let category of entry.categories" [ngValue]="category.id">{{category.name}}</option>
                 </select>
             </td>
-            <td><input [(ngModel)]="newRow.amount" class="form-control"></td>
+            <td><input [(ngModel)]="newRow.amount" class="form-control" type="number" step="0.01" floatField></td>
             <td><button class="btn btn-success" (click)="addRow()">Add</button></td>
         </tr>
         <tr>

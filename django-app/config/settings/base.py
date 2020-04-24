@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 ]
 
 AUTH_USER_MODEL = 'profiles.User'
+LOGIN_URL = 'login'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -157,4 +158,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     # location of your application, should not be public web accessible
     os.path.dirname(BASE_DIR) + '/ng-app/dist/',
+    BASE_DIR+'/staticfiles/',
 )

@@ -10,36 +10,39 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" type="image/x-icon" href="favicon.ico">
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <link href="{% static '/styles/common.css' %}" rel="stylesheet" type="text/css">
     </head>
 
     <body>
         <div align="right">
-
-            <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
-                <input name="next" type="hidden" value="{{ redirect_to }}">
-                <div style="width: 150px">
-                    <select name="language" class="form-control">
-                        {% get_current_language as LANGUAGE_CODE %}
-                        {% get_available_languages as LANGUAGES %}
-                        {% get_language_info_list for LANGUAGES as languages %}
-                        {% for language in languages %}
-                            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
-                                {{ language.name_local }} ({{ language.code }})
-                            </option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-success btn-sm">{% trans 'Change lang' %}</button>
-            </form>
-
+            <div class="inline">
+                <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+                    <input name="next" type="hidden" value="{{ redirect_to }}">
+                    <div style="width: 150px">
+                        <select name="language" class="form-control inline">
+                            {% get_current_language as LANGUAGE_CODE %}
+                            {% get_available_languages as LANGUAGES %}
+                            {% get_language_info_list for LANGUAGES as languages %}
+                            {% for language in languages %}
+                                <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                                    {{ language.name_local }} ({{ language.code }})
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-success btn-sm">{% trans 'Change lang' %}</button>
+                </form>
+            </div>
+            
             {% if user.is_authenticated %}
-                <div>
-                    {% trans 'Welcome' %}, {{ request.user.username }} !
-                    <form method="post" action="{% url 'logout' %}">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-success">{% trans 'Logout' %}</button>
-                    </form>
-                </div>
+            <div class="inline">
+                {% trans 'Welcome' %}, {{ request.user.username }} !
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-success">{% trans 'Logout' %}</button>
+                </form>
+            </div>
             {% endif %}
 
         </div>

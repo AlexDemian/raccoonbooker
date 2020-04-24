@@ -33,16 +33,7 @@ class FinanceRowApiSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = FinanceRow
-        fields = '__all__'
-        read_only_fields = ('origin_amount',)
-
-
-    def to_representation(self, instance):
-        # ToDO: dirty code
-        category = FinanceCategoryApiSerializer(instance.category).data
-        data = super(FinanceRowApiSerializer, self).to_representation(instance)
-        data["category"] = category
-        return data
+        fields = ['id', 'name', 'description', 'pinned', 'amount', 'deleted', 'category', 'entry']
 
 class FinanceCategoryApiSerializer(serializers.ModelSerializer):
 
