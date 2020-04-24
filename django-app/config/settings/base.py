@@ -153,7 +153,7 @@ USE_TZ = True
 
 # URL prefix for static files.
 STATIC_URL = '/static/'
-
+STATIC_ROOT = os.path.dirname(BASE_DIR)+'/all_static/'
 # Additional locations of static files
 STATICFILES_DIRS = (
     # location of your application, should not be public web accessible

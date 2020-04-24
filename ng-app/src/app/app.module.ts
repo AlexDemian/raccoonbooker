@@ -11,7 +11,7 @@ import { BookerEntrieComponent } from './booker-tables-app/booker-table/booker-t
 
 import { BookerEntriesAPI } from './services/http';
 import { CookieService } from "angular2-cookie/services/cookies.service";
-import { floatFieldDirective } from "./services/directives";
+import { smartFloatFieldDirective } from "./services/directives";
 import { filterObjectsByPropertyPipe } from "./services/pipes";
 
 @NgModule({
@@ -20,7 +20,7 @@ import { filterObjectsByPropertyPipe } from "./services/pipes";
     CategoriesTableComponent,
     BookerEntriesAppComponent,
     BookerEntrieComponent,
-    floatFieldDirective,
+    smartFloatFieldDirective,
     filterObjectsByPropertyPipe
   ],
   imports: [

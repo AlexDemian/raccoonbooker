@@ -2,5 +2,6 @@
 .vscode/
 env/
 venv/
+all_static/
 *.sqlite3
 *temp*

@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CookieService } from "angular2-cookie/core";
-
+import { Urls } from '../externalJs/django_js_reverse/js/reverse.js';
 
 export class Entry{
     id: number;
@@ -41,24 +41,24 @@ export class BookerEntriesAPI{
     }
 
     getEntries(): Observable<any> {
-        return this.http.get('/api/booker/entries/', {headers: this.httpHeaders})
+        return this.http.get(Urls['api-entries-list'](), {headers: this.httpHeaders})
     }
 
     addEntry(entry): Observable<any> {
-        return this.http.post('/api/booker/entries/', entry, {headers: this.httpHeaders});
+        return this.http.post(Urls['api-entries-list'](), entry, {headers: this.httpHeaders});
     }
 
     updateEntry(entry): Observable<any> {
-        return this.http.patch('/api/booker/entries/', entry, {headers: this.httpHeaders});
+        return this.http.patch(Urls['api-entries-detail'](entry.id), entry, {headers: this.httpHeaders});
     }
 
     addRow(row): Observable<any> {
         console.log('Pushed row', row)
-        return this.http.post('/api/booker/rows/', row, {headers: this.httpHeaders});
+        return this.http.post(Urls['api-rows-list'](), row, {headers: this.httpHeaders});
     }
 
     updateRow(row): Observable<any> {
-        return this.http.patch('/api/booker/rows/'+row.id+'/', row, {headers: this.httpHeaders});
+        return this.http.patch(Urls['api-rows-detail'](row.id), row, {headers: this.httpHeaders});
     }
 
     private handleError(error: any) {
