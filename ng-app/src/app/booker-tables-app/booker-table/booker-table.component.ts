@@ -34,7 +34,7 @@ export class BookerEntrieComponent implements OnInit {
 
   calculateTotal() {
     this.totalSum = 0;
-    for (let row of this.entry["rows"]) {
+    for (let row of this.entry["rows"].filter(row => !row.deleted)) {
       this.totalSum += Number(row.amount); // Todo
     }
   }

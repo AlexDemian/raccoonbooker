@@ -1,9 +1,13 @@
-<table class="table">
+<table class="table table-striped table-sm text-center">
     <caption>
-        <div style="width: 200px;"> 
+        <div style="width: 200px;" class="inline"> 
             <input class="form-control" [(ngModel)]="entry.name"/>
-            <button class="btn btn-info" (click)="filters.deleted = !filters.deleted">{{ filters.deleted ? 'Active' : 'Removed' }}</button>
         </div>
+        <button class="btn btn-outline-info fa" style="margin-left: 50px;"
+            [ngClass]="filters.deleted ? 'fa-list-ul' : 'fa-history'" 
+            (click)="filters.deleted = !filters.deleted">
+        </button>
+        <button class="btn btn-outline-danger fa fa-trash" style="margin-left: 5px;"></button>
     </caption>
     <thead>
         <tr>
@@ -18,33 +22,34 @@
     <tbody>
         <tr *ngFor="let row of entry.rows | filterObjectsByProperty:'deleted':filters.deleted; let index = index">
             <td>{{ index + 1 }}</td>
-            <td><input [(ngModel)]="row.name" (focusout)="updateRow(row)" class="form-control"></td>
-            <td><input [(ngModel)]="row.description" (focusout)="updateRow(row)" class="form-control"></td>
+            <td><input [(ngModel)]="row.name" (focusout)="updateRow(row)" class="form-control-sm"></td>
+            <td><input [(ngModel)]="row.description" (focusout)="updateRow(row)" class="form-control-sm"></td>
             <td>
-                <select [(ngModel)]="row.category" class="form-control" (change)="updateRow(row)">
+                <select [(ngModel)]="row.category" class="form-control-sm" (change)="updateRow(row)">
                     <option *ngFor="let category of entry.categories"  [selected]="category.id === row.category.id" [ngValue]="category.id">{{category.name}}</option>
                 </select>
             </td>
-            <td><input [(ngModel)]="row.amount" (focusout)="updateRow(row)" class="form-control" smartFloatField></td>
+            <td><input [(ngModel)]="row.amount" (focusout)="updateRow(row)" class="form-control-sm" smartFloatField></td>
             <td>
-                <button class="btn" [ngClass]="[filters.deleted ? 'btn-success': 'btn-danger']" (click)="removeRestoreRow(row)">
-                    {{ filters.deleted ? 'Restore' : 'Remove' }}
+                <button class="btn btn-outline-success fa fa-xs" 
+                    [ngClass]="{ 'fa-trash-restore btn-outline-success': filters.deleted, 'fa-times btn-outline-danger': !filters.deleted }"       
+                    (click)="removeRestoreRow(row)">
                 </button>
             </td>
         </tr>
-        <tr class="new-row-tr">
+        <tr class="new-row-tr" *ngIf="!filters.deleted">
             <td></td>
-            <td><input [(ngModel)]="newRow.name" class="form-control"></td>
-            <td><input [(ngModel)]="newRow.description" class="form-control"></td>
+            <td><input [(ngModel)]="newRow.name" class="form-control-sm"></td>
+            <td><input [(ngModel)]="newRow.description" class="form-control-sm"></td>
             <td>
-                <select [(ngModel)]="newRow.category" class="form-control">
+                <select [(ngModel)]="newRow.category" class="form-control-sm">
                     <option *ngFor="let category of entry.categories" [ngValue]="category.id">{{category.name}}</option>
                 </select>
             </td>
-            <td><input [(ngModel)]="newRow.amount" class="form-control" smartFloatField></td>
-            <td><button class="btn btn-success" (click)="addRow()">Add</button></td>
+            <td><input [(ngModel)]="newRow.amount" class="form-control-sm" smartFloatField></td>
+            <td><button class="btn btn-outline-success fa fa-plus" (click)="addRow()"></button></td>
         </tr>
-        <tr>
+        <tr *ngIf="!filters.deleted">
             <td></td>
             <td>Total:</td>
             <td></td>

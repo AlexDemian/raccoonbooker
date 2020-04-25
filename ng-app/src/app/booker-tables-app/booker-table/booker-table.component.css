@@ -8,6 +8,12 @@ table {
     width: 80%;
 }
 
-button {
-    margin-top: 3px;
+caption {
+    caption-side: top;
+}
+
+input {
+    border: none; 
+    border-width: 0; 
+    box-shadow: none;
 }
