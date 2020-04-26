@@ -10,7 +10,12 @@ import { BookerEntriesAPI, Entry, EntryRow } from '../../services/http';
 export class BookerEntrieComponent implements OnInit {
   @Input('entry') entry = Entry
 
-  totalSum = 0;
+  calculations = {
+    incomesSum: 0,
+    outcomesSum: 0,
+    totalSum: 0,
+  }  
+
   newRow = {
     "entry": 0,
     "name": "",
@@ -33,9 +38,21 @@ export class BookerEntrieComponent implements OnInit {
   }
 
   calculateTotal() {
-    this.totalSum = 0;
-    for (let row of this.entry["rows"].filter(row => !row.deleted)) {
-      this.totalSum += Number(row.amount); // Todo
+    
+    this.calculations = {
+      incomesSum: 0,
+      outcomesSum: 0,
+      totalSum: 0,
+    }  
+
+    for (let row of this.entry['rows']) {
+      let value = Number(row.amount); // Todo
+      this.calculations.totalSum += value;
+      if (value > 0) {
+        this.calculations.incomesSum += value
+      } else {
+        this.calculations.outcomesSum += value
+      }
     }
   }
 

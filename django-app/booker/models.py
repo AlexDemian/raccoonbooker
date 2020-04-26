@@ -39,6 +39,7 @@ class FinanceRow(models.Model):
 
     class Meta:
         db_table = 'booker_rows'
+        unique_together = ('name', 'entry', 'category')
 
     def save(self, *args, **kwargs):
         first_save = self.pk is None

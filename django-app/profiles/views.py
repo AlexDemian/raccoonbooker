@@ -9,6 +9,8 @@ def login(request):
     if form.is_valid():
         auth_login(request.user)
         return redirect('index')
+    elif request.method == 'POST':
+        form.lazy_errors = ['Incorrect email or password']
     return {'form': form}
 
 def logout(request):

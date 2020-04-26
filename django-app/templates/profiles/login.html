@@ -13,15 +13,84 @@
     .login-block {
         padding-left: 100px;
         padding-right: 100px;
-        width: 400px;
+        width: 600px;
     }
+
+    #right_container {
+        position: fixed;
+        left: calc(100% - 350px);
+        width: 350px;
+        background-color:#1d2d3f;
+        color: #fdffff;
+        border-right: #ed9c33 solid 10px;
+        font-size : 1vm;
+
+    }
+
+    #description_top{
+        position: absolute;
+        top: 5%;
+        left: 10%;
+        width: 80%;
+    }
+
+    #description_top h6 {
+        font-size: .8vw;
+
+    }
+
+    #description_top h5 {
+        font-size: 1vw;
+    }
+
+
+
 </style>
+{% block navbar %}{% endblock %}
+<div id="right_container" class="h-100">
+
+    <div id="description_top">
+        <h5 style="margin-top: 3%;">
+            Simple. Smart.<br>
+            Totally free. <span class="fa fa-heart" style="color: red"></span>
+        </h5>
+        <br>
+        <h6 style="margin-left: 5%;">
+            Raccoonbooker is one-man project and free web-application.<br><br>
+            Core of application based on your income/outcome accounting
+            represented as list of tables which separated by month periods.
+            Raccoonbooker includes categories, diagrams, wishlists and many other features for you comfort.
+            It's very flexible and consistent with the idea "Write once, use infinitely!"<br><br>
+        </h6>
+
+        <h5 style="margin-top: 10%;">"Why should I use this"?</h5>
+        <br>
+        <h6 style="margin-left: 5%;">
+            Timely finance planning can change your personality.<br>
+            It changed mine too!
+            <br><br>
+            As you know, phylosophy of sales based on emotional shopping.
+            But that isn't work if you really know what do you want.
+            <br><br>
+            Strong money control helps you in avoiding unnecessary purchases and
+            turns your bigger goals into reality.
+            Raccoonbooker provides you simple and powerful toolkit to make this process easier you can imagine.
+        </h6>
+        <br><br>
+        {% include 'common/language_form.html' %}
+    </div>
+
+
+</div>
 
 <div align="center" >
     <div class="login-block">
-        <h1>Raccoonbooker</h1>
         <br>
-        <div class="form-group">
+        <br>
+        <h3>Raccoon Booker</h3>
+        <h5>Your personal finance assistant.</h5>
+        <br>
+        <div class="form-group w-50">
             <form method="post" action="{% url 'login' %}">
                 {% csrf_token %}
                 <label for="id_name">Email:</label>
@@ -30,6 +99,11 @@
                 <label for="id_password">Password:</label>
                 <input class="form-control" name="password" type="password" id="id_password" required>
                 <br>
+                {% for error in form.lazy_errors %}
+                    <span style="color:red">{{ error }}</span>
+                    <br>
+                    <br>
+                {% endfor %}    
                 <button type="submit" class="btn btn-success">{% trans 'Sign In' %}</button>
             </form>
         </div>

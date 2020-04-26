@@ -1,6 +1,6 @@
-.new-row-tr {
-    border-top: solid 2px coral;
-    border-bottom: solid 2px coral;
+.total-row-tr {
+    border-top: solid 2px #ed9c33;
+    border-bottom: solid 2px #ed9c33;
 }
 
 table {
