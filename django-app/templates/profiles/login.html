@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% load static %}
+{% load widget_tweaks %}
 
 {% block content %}
 <style>
@@ -20,9 +21,9 @@
         position: fixed;
         left: calc(100% - 350px);
         width: 350px;
-        background-color:#1d2d3f;
+        background-color: var(--primary-color);
         color: #fdffff;
-        border-right: #ed9c33 solid 10px;
+        border-right: var(--secondary-color) solid 10px;
         font-size : 1vm;
 
     }
@@ -47,9 +48,12 @@
 
 </style>
 {% block navbar %}{% endblock %}
+{% include 'profiles/register_modal.html' %}
 <div id="right_container" class="h-100">
-
+    
     <div id="description_top">
+        {% include 'common/language_form.html' %}
+        <br>
         <h5 style="margin-top: 3%;">
             Simple. Smart.<br>
             Totally free. <span class="fa fa-heart" style="color: red"></span>
@@ -76,14 +80,19 @@
             turns your bigger goals into reality.
             Raccoonbooker provides you simple and powerful toolkit to make this process easier you can imagine.
         </h6>
-        <br><br>
-        {% include 'common/language_form.html' %}
+        <br>
+        <div class="form-group text-center">
+            <form method="post" action="{% url 'base-content-generator' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success btn-sm">{% trans 'Try demo now' %}</button>
+            </form>
+        </div>
     </div>
 
 
 </div>
 
-<div align="center" >
+<div align="center">
     <div class="login-block">
         <br>
         <br>
@@ -94,28 +103,21 @@
             <form method="post" action="{% url 'login' %}">
                 {% csrf_token %}
                 <label for="id_name">Email:</label>
-                <input class="form-control" name="username" id="id_name" required>
+                {% render_field login_form.email class="form-control" %}
                 <br>
                 <label for="id_password">Password:</label>
-                <input class="form-control" name="password" type="password" id="id_password" required>
+                {% render_field login_form.password class="form-control" type="password" %}
                 <br>
-                {% for error in form.lazy_errors %}
+                {% for error in login_form.lazy_errors %}
                     <span style="color:red">{{ error }}</span>
                     <br>
                     <br>
                 {% endfor %}    
-                <button type="submit" class="btn btn-success">{% trans 'Sign In' %}</button>
+                <button type="submit" class="btn btn-success" style="margin-right: 20px;">{% trans 'Sign In' %}</button>
+                <button type="button" data-toggle="modal" data-target="#register-modal" class="btn btn-success">{% trans 'Register' %}</button>
             </form>
         </div>
-        <span>-- {% trans 'OR' %} --</span>
-        <br>
-        <br>
-        <div class="form-group">
-            <form method="post" action="{% url 'base-content-generator' %}">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-success">{% trans 'Try demo now' %}</button>
-            </form>
-        </div>
+        <h6><a href="">{% trans 'Forgot password?' %}</a></h6>
     </div>
 </div>
 {% endblock %}

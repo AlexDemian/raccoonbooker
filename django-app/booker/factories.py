@@ -1,20 +1,26 @@
-import factory
-from booker.models import FinanceSheet, FinanceCategory, FinanceSheetEntry, FinanceRow, Wish
-from django.contrib.auth import get_user_model
 import random
 import names
 import datetime
 import time
 
+from django.contrib.auth import get_user_model
+from django.utils.crypto import get_random_string
+import factory
+
+from booker.models import FinanceSheet, FinanceCategory, FinanceSheetEntry, FinanceRow, Wish
+
 class UserFactory(factory.django.DjangoModelFactory):
-    password = '123'
 
     class Meta:
         model = get_user_model()
 
     @factory.lazy_attribute
-    def username(self):
-        return '{}_{}'.format(names.get_first_name(), int(time.time()))
+    def password(self):
+        return get_random_string(length=20)
+
+    @factory.lazy_attribute
+    def email(self):
+        return '{}_{}@foo.com'.format(names.get_first_name(), int(time.time()))
 
 class FinanceSheetFactory(factory.django.DjangoModelFactory):
     user = factory.SubFactory(UserFactory)

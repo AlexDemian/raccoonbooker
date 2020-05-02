@@ -33,6 +33,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Templates
+    'widget_tweaks',
+
     # DRF
     'rest_framework.authtoken',
     'rest_framework',
@@ -94,6 +97,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'profiles.WeakPasswordValidator',
+    },
+    {
+        'NAME': 'profiles.MaxLengthPasswordValidator',
+    },
+]
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases

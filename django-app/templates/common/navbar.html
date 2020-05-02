@@ -1,0 +1,47 @@
+{% load i18n %}
+{% load static %}
+{% block navbar %}
+{% include 'profiles/register_modal.html' %}
+<style>
+    nav {
+        border-bottom: 2px  var(--secondary-color) solid;
+        border-top: 2px  var(--secondary-color) solid;
+        margin-bottom: 20px;
+        height: 50px;
+    }
+
+    #logo {
+        margin-right: 100px;
+        font-weight: 800;
+    }
+
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            
+            <li class="nav-item">
+                <a class="nav-link" id="logo" href="{% url 'index' %}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Sheets</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Settings</a>
+            </li>        
+        </ul>
+        <form method="post" action="{% url 'logout' %}"  class="form-inline my-2 my-lg-0" >
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success fa-xs">{% trans 'Logout' %}</button>
+        </form>
+        {% if user.is_demo_user %}
+            <button type="button" data-toggle="modal" data-target="#register-modal" class="btn btn-success btn-sm">{% trans 'Register' %}</button>  
+        {% endif %}
+    </div>
+</nav>    
+{% endblock %}
