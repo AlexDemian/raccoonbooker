@@ -171,3 +171,10 @@ STATICFILES_DIRS = (
     os.path.dirname(BASE_DIR) + '/ng-app/dist/',
     BASE_DIR+'/staticfiles/',
 )
+
+# Email
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'raccoonbooker@gmail.com'
+from config.settings.secret import EMAIL_HOST_PASSWORD
+EMAIL_PORT = 587

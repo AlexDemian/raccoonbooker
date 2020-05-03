@@ -20,11 +20,6 @@
         {% block navbar %}
             {% include 'common/navbar.html' %}
         {% endblock %}
-        <script>
-        function reverseUrl (url_name, args=[], kwargs={}) {
-            return Urls[url_name](...args, kwargs)
-        }
-        </script>
         {% block content %}
         {% endblock %}
         </body>

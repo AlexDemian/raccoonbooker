@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block navbar %}{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background-image: url("{% static 'v1/img/raccoons/warning.jpg'%}"); 
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+
+    #alert-text {
+        margin-top: 15%;
+        margin-left: 40%;
+        font-weight: bold;
+    }
+</style>
+
+
+    <div id="alert-container" class="container d-flex h-100">
+        <div id="alert-text">
+            <h3>
+                Hm...Something wrong..
+            </h3>
+        </div>
+    </div>
+{% endblock %}

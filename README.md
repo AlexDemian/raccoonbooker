@@ -1,3 +1,8 @@
+# Modify settings/secret.py
+```python
+EMAIL_HOST_PASSWORD = 'password'
+```
+
 # Python
 ```sh
 cd django-app

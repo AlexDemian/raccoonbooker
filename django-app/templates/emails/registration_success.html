@@ -1,0 +1,17 @@
+{% extends 'emails/emails_base.html' %}
+{% block content %}
+    <div>
+        Welcome to Raccoon Booker!
+        <br>
+        Your username is: {{ user_email }}
+        <br>
+        Your password is: {{ user_password }}
+        <br>
+        Thank you for choosing raccoon service!
+        <br>
+        Please confirm your profile using following link:
+        <br>
+        <br>
+        <a href="{{ verification_url }}">Confirm account!</a>
+    </div>
+{% endblock %}

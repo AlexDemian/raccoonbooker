@@ -22,6 +22,7 @@ class User(AbstractUser):
     email = models.EmailField(_('email address'), unique=True)
     currency = models.CharField(_('currency'), max_length=3)
     user_type = models.CharField(_('user_type'), max_length=50, choices=USER_TYPE_CHOICES, default=BASIC_USER)
+    confirmed = models.BooleanField(_('confirmed'), default=False)
 
     @property
     def is_demo_user(self):

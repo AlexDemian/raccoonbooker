@@ -5,6 +5,7 @@ from django.contrib.auth import login as auth_login
 from profiles.models import User
 from profiles.constants import ERROR_WEAK_PASSWORD
 from profiles.validators import WeakPasswordValidator, MaxLengthPasswordValidator
+from profiles.helpers import send_mail_on_registration_success
 from booker.factories import BaseContentFactory
 
 class UserAPISerializer(serializers.ModelSerializer):
@@ -17,23 +18,25 @@ class UserAPISerializer(serializers.ModelSerializer):
             'password': {'write_only': True}
         }
     
+    def _do_on_register(self, request, user, user_password):
+        # TODO: get language from cookies and save it
+        user.set_password(user_password)
+        user.save()
+        auth_login(request, user)
+        # TODO: make as signal
+        send_mail_on_registration_success(user, user_password)
 
     def create(self, validated_data):
         user = User.objects.create(**validated_data)
-        user.set_password(validated_data["password"])
-        user.save()
+        self._do_on_register(self.context['request'], user, validated_data["password"])
         BaseContentFactory.create(user)
-        auth_login(self.context['request'], user)
-        # TODO: get language from cookies and save it
         return user
 
     def create_from_demo_user(self, request, validated_data):
         user = request.user
         user.user_type = user.BASIC_USER
         user.email = validated_data["email"]
-        user.set_password(validated_data["password"])
-        user.save()
-        auth_login(request, user)
+        self._do_on_register(request, user, validated_data["password"])
         return user
 
     def validate_password(self, value):

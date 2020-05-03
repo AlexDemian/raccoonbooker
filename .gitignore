@@ -5,3 +5,4 @@ venv/
 all_static/
 *.sqlite3
 *temp*
+secret.py

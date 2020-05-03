@@ -2,6 +2,8 @@
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.authtoken.models import Token
+from rest_framework.permissions import AllowAny
 
 from profiles.serializers import UserAPISerializer
 from profiles.constants import ERROR_IS_NOT_DEMO_USER
@@ -10,7 +12,12 @@ from profiles.models import User
 class UserModelViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserAPISerializer
-   
+    
+    def get_permissions(self):
+        if self.action == 'create':
+            return [AllowAny(), ]        
+        return super(UserModelViewSet, self).get_permissions()
+
     @action(detail=False, methods=['post'])
     def create_from_demo_user(self, request):
         
