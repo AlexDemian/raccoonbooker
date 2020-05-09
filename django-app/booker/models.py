@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 class FinanceSheet(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
@@ -7,6 +8,7 @@ class FinanceSheet(models.Model):
 
     class Meta:
         db_table = 'booker_sheets'
+        unique_together = ('user', 'name')
 
 
 class FinanceCategory(models.Model):
@@ -27,13 +29,24 @@ class FinanceSheetEntry(models.Model):
         db_table = 'booker_entry'
 
 
-class FinanceRow(models.Model):
-    category = models.ForeignKey(FinanceCategory, on_delete=models.CASCADE)
-    entry = models.ForeignKey(FinanceSheetEntry, on_delete=models.CASCADE)
+class GenericFinanceRow(models.Model):
     name = models.CharField(max_length=100)
+    category = models.ForeignKey(FinanceCategory, on_delete=models.CASCADE)
+    amount = models.DecimalField(decimal_places=2, max_digits=20)
+
+    class Meta:
+        abstract = True
+
+class TemplatedRow(GenericFinanceRow):
+    sheet = models.ForeignKey(FinanceSheet, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'booker_templated_rows'
+
+class EntryRow(GenericFinanceRow):
+    entry = models.ForeignKey(FinanceSheetEntry, on_delete=models.CASCADE)
     description = models.CharField(blank=True, max_length=200)
     pinned = models.BooleanField(default=False)
-    amount = models.DecimalField(decimal_places=2, max_digits=20)
     origin_amount = models.DecimalField(decimal_places=2, max_digits=20)
     deleted = models.BooleanField(default=False)
 
@@ -51,18 +64,18 @@ class FinanceRow(models.Model):
         else:
             self.amount = -abs(self.amount)
 
-        return super(FinanceRow, self).save(*args, **kwargs)
+        return super(EntryRow, self).save(*args, **kwargs)
 
 
 class Wish(models.Model):
-    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
-    sheet = models.ForeignKey(FinanceSheet, on_delete=models.CASCADE, null=True)
+    sheet = models.ForeignKey(FinanceSheet, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     description = models.CharField(blank=True, max_length=200)
     balance = models.DecimalField(default=0, decimal_places=2, max_digits=20)
     amount = models.DecimalField(decimal_places=2, max_digits=20)
     deleted = models.BooleanField(default=False)
     expected_date =  models.DateField()
-
+    expected_percent = models.DecimalField(validators=[MinValueValidator(.1), MaxValueValidator(100)], decimal_places=2, max_digits=3)
+    
     class Meta:
         db_table = 'booker_wishlist'

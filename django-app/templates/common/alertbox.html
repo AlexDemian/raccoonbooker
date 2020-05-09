@@ -1,0 +1,48 @@
+{% load static %}
+
+<style>
+    .swal-alert {
+        width: 600px;
+        border: darkgrey 3px solid;
+    }
+
+    .alert-image {
+        width: 35%;
+        height: 35%;
+        display: inline-block;
+    }
+
+</style>
+
+<script src="{% static '/v1/node_modules/sweetalert2/dist/sweetalert2.min.js' %}"></script>
+<script>
+
+    function alertbox(message, message_type='success', title='',  showCancelButton=false) {
+        var types = {
+          'warning': 'text-warning',
+          'error': 'text-danger',
+          'info': 'text-info',
+          'success': 'text-success'
+        };
+        
+        // TODO: can't combine rendererers (JS and django)
+        let raccoon_image = `<img class='alert-image' src="{% static '/v1/img/raccoons/${message_type}.jpg' %}"/>`
+
+        cancel_button = {text: 'No', className: "btn btn-light", visible: showCancelButton, value: null, closeModal: true};
+        confirm_button = {text: 'Yes', className: "btn btn-success", visible: true, value: true, closeModal: true};
+
+        return sw = swal({
+          title: title,
+          text: message,
+          context: raccoon_image,
+          className: "swal-alert",
+          buttons: {cancel: cancel_button, confirm: confirm_button},
+        });    
+
+    };
+
+    {% for message in messages %}
+        alertbox('{{ message }}', '{{ message.tags }}');
+    {% endfor %}
+
+</script>

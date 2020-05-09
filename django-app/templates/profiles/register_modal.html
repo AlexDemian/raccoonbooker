@@ -44,7 +44,6 @@ function register() {
     let data = $("#register-form").serialize()
     $.post(url, data)
     .fail(function(data) {
-        console.log(data);
         $("#register-email-errors").html((data.responseJSON.email || []).join("<br>"));
         $("#register-password-errors").html((data.responseJSON.password || []).join("<br>"));
     })

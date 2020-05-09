@@ -20,7 +20,7 @@
             <td></td>
         <tr>
         <tr>
-            <td>#</td>
+            <td></td>
             <td>Name</td>
             <td>Description</td>
             <td>Category</td>
@@ -29,8 +29,8 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let row of entry.rows | filterObjectsByProperty:'deleted':filters.deleted; let index = index">
-            <td>{{ index + 1 }}</td>
+        <tr *ngFor="let row of entry.rows | filterObjectsByProperty:'deleted':filters.deleted;">
+            <td><span class="fa fa-sm" [ngClass]="{'text-success fa-plus': row.amount >= 0, 'text-danger fa-minus': row.amount < 0}"></span></td>
             <td><input [(ngModel)]="row.name" (focusout)="updateRow(row)" class="form-control-sm"></td>
             <td><input [(ngModel)]="row.description" (focusout)="updateRow(row)" class="form-control-sm"></td>
             <td>
@@ -56,14 +56,14 @@
                 </select>
             </td>
             <td><input [(ngModel)]="newRow.amount" class="form-control-sm" smartFloatField></td>
-            <td><button class="btn btn-outline-success fa fa-plus" (click)="addRow()"></button></td>
+            <td><button class="btn btn-outline-success btn-sm fa fa-plus" (click)="addRow()"></button></td>
         </tr>
         <tr *ngIf="!filters.deleted" class="total-row-tr">
             <td></td>
             <td>Earnings: {{ calculations.incomesSum }}</td>
             <td>Costs: {{ calculations.outcomesSum }}</td>
             <td></td>
-            <td>Total: {{ calculations.totalSum }}</td>
+            <td [ngClass]="{'text-success': calculations.totalSum >= 0, 'text-danger': calculations.totalSum < 0}">Total: {{ calculations.totalSum }}</td>
             <td></td>
         <tr>
     </tbody>

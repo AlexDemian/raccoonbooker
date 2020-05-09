@@ -5,7 +5,6 @@ from django.contrib.auth import login as auth_login
 from profiles.models import User
 from profiles.constants import ERROR_WEAK_PASSWORD
 from profiles.validators import WeakPasswordValidator, MaxLengthPasswordValidator
-from profiles.helpers import send_mail_on_registration_success
 from booker.factories import BaseContentFactory
 
 class UserAPISerializer(serializers.ModelSerializer):
@@ -23,8 +22,6 @@ class UserAPISerializer(serializers.ModelSerializer):
         user.set_password(user_password)
         user.save()
         auth_login(request, user)
-        # TODO: make as signal
-        send_mail_on_registration_success(user, user_password)
 
     def create(self, validated_data):
         user = User.objects.create(**validated_data)

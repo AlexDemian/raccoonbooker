@@ -17,7 +17,7 @@ urlpatterns = [
     path('booker/', include('booker.urls')),
     
     # REST
-    path('api/v1/', include('config.api_urls')),
+    path('api/v1/', include('config.urls_api')),
     
     #Errors
     path('alerts/error_page', error_page, name='error-page'),

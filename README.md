@@ -1,10 +1,13 @@
-# Modify settings/secret.py
+# Create and modify settings/secret.py
 ```python
 EMAIL_HOST_PASSWORD = 'password'
 ```
 
 # Python
 ```sh
+cd django-app/staticfiles/v1/js
+npm install 
+
 cd django-app
 python3 -m venv env
 source env/bin/activate

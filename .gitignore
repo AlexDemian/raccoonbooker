@@ -4,5 +4,7 @@ env/
 venv/
 all_static/
 *.sqlite3
-*temp*
 secret.py
+temp.txt
+node_modules/
+package-lock.json

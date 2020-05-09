@@ -1,8 +1,7 @@
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
-from django.urls import reverse
 from django.conf import settings
-from rest_framework.authtoken.models import Token
+
 
 def send_html_templated_mail(receivers, template_path, context, **kwargs):
     """Sends html emails.
@@ -28,12 +27,10 @@ def send_mail_on_registration_success(user, password):
     subject = 'Welcome to Raccoon Booker!'
     template_path = 'emails/registration_success.html'
     
-    token = getattr(Token.objects.filter(user=user).first(), 'key', None)
-    assert Token is not None, ('API Token not found for user:', user.email)
     context = {
         'user_email': user.email,
         'user_password': password[:2] + '*' * (len(password) - 4) + password[-2:],
-        'verification_url': reverse('confirm-user', kwargs={'token': token})
+        'verification_url': user.verification_url,
     }
     send_html_templated_mail([user.email], template_path, context, subject=subject)
 

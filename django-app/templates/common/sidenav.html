@@ -1,0 +1,28 @@
+<style>
+    #sidenav {
+        position: fixed;
+        left: calc(100% - 250px);
+        width: 250px;
+        background-color: var(--primary-color);
+        color: #fdffff;
+
+    }
+
+    #side-content {
+        padding: 25px;
+    }
+
+</style>
+
+<div id="sidenav" class="h-100">
+    <div id="side-content">
+        <div class="form-group">
+            <label for="calculator">Calculator</label>
+            <textarea class="form-control-sm" placeholder="10*5.2+2" id="calculator"></textarea>
+        </div>
+        <div class="form-group">
+            <input class="form-control-sm" disabled id="calculator-total"/ value="=">
+        </div>
+    </div>
+
+</div>

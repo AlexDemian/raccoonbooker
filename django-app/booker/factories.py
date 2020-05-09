@@ -7,7 +7,7 @@ from django.contrib.auth import get_user_model
 from django.utils.crypto import get_random_string
 import factory
 
-from booker.models import FinanceSheet, FinanceCategory, FinanceSheetEntry, FinanceRow, Wish
+from booker.models import FinanceSheet, FinanceCategory, FinanceSheetEntry, EntryRow, Wish
 
 class UserFactory(factory.django.DjangoModelFactory):
 
@@ -48,22 +48,22 @@ class FinanceSheetEntryFactory(factory.django.DjangoModelFactory):
         model = FinanceSheetEntry
 
 
-class FinanceRowFactory(factory.django.DjangoModelFactory):
+class EntryRowFactory(factory.django.DjangoModelFactory):
     category = factory.SubFactory(FinanceCategoryFactory)
     entry = factory.SubFactory(FinanceSheetEntryFactory)
     name = 'Wine'
     amount = 3.5
 
     class Meta:
-        model = FinanceRow
+        model = EntryRow
 
 
 class WishFactory(factory.django.DjangoModelFactory):
-    user = factory.SubFactory(UserFactory)
     name = 'New car'
     description = 'Cool red funny car!'
     sheet = factory.SubFactory(FinanceSheetFactory)
     amount = 18500
+    expected_percent = 2
 
     @factory.lazy_attribute
     def expected_date(self):
@@ -91,19 +91,19 @@ class BaseContentFactory:
         ]
         entry = FinanceSheetEntryFactory.create(sheet=sheet)
         activities = [
-            FinanceRowFactory.create(
+            EntryRowFactory.create(
                 name='New laptop',
                 category=categories[0],
                 entry=entry,
                 amount=-1000,
             ),
-            FinanceRowFactory.create(
+            EntryRowFactory.create(
                 name='Sallary',
                 category=categories[1],
                 entry=entry,
                 amount=100500,
             )
         ]
-        wish = WishFactory.create(sheet=sheet, user=user)
+        wish = WishFactory.create(sheet=sheet)
         return locals()
 

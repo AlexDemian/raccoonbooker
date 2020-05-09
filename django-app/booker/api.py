@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from booker.models import FinanceSheetEntry, FinanceCategory, FinanceRow, FinanceSheet
-from booker.serializers import FinanceSheetEntryApiSerializer, FinanceCategoryApiSerializer, FinanceRowApiSerializer, FinanceSheetApiSerializer
+from booker.models import FinanceSheetEntry, FinanceCategory, EntryRow, FinanceSheet
+from booker.serializers import FinanceSheetEntryApiSerializer, FinanceCategoryApiSerializer, EntryRowApiSerializer, FinanceSheetApiSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 
 class FinanceEntryViewSet(viewsets.ModelViewSet):
@@ -23,12 +23,12 @@ class FinanceCategoryViewSet(viewsets.ModelViewSet):
         return FinanceCategory.objects.filter(sheet__user=self.request.user)
 
 
-class FinanceRowViewSet(viewsets.ModelViewSet):
-    model = FinanceRow
-    serializer_class = FinanceRowApiSerializer
+class EntryRowViewSet(viewsets.ModelViewSet):
+    model = EntryRow
+    serializer_class = EntryRowApiSerializer
 
     def get_queryset(self):
-        return FinanceRow.objects.filter(entry__sheet__user=self.request.user)
+        return EntryRow.objects.filter(entry__sheet__user=self.request.user)
 
 
 class FinanceSheetViewSet(viewsets.ModelViewSet):

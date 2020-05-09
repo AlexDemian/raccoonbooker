@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from booker.models import FinanceSheetEntry, FinanceRow, FinanceCategory, FinanceSheet
+from booker.models import FinanceSheetEntry, EntryRow, FinanceCategory, FinanceSheet
 import datetime
 
 
@@ -13,8 +13,8 @@ class FinanceSheetEntryApiSerializer(serializers.ModelSerializer):
     categories = serializers.SerializerMethodField()
 
     def get_rows(self, instance):
-        return FinanceRowApiSerializer(
-            FinanceRow.objects.filter(entry=instance),
+        return EntryRowApiSerializer(
+            EntryRow.objects.filter(entry=instance),
         many=True).data
 
     def get_categories(self, instance):
@@ -29,10 +29,10 @@ class FinanceSheetEntryApiSerializer(serializers.ModelSerializer):
         return super(FinanceSheetEntryApiSerializer, self).to_representation(instance)
 
 
-class FinanceRowApiSerializer(serializers.ModelSerializer):
+class EntryRowApiSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = FinanceRow
+        model = EntryRow
         fields = ['id', 'name', 'description', 'pinned', 'amount', 'deleted', 'category', 'entry']
 
 class FinanceCategoryApiSerializer(serializers.ModelSerializer):
