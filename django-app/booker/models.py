@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 class FinanceSheet(models.Model):
-    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name="sheets")
     name = models.CharField(max_length=100)
 
     class Meta:
@@ -12,7 +12,7 @@ class FinanceSheet(models.Model):
 
 
 class FinanceCategory(models.Model):
-    sheet = models.ForeignKey(FinanceSheet, on_delete=models.CASCADE)
+    sheet = models.ForeignKey(FinanceSheet, on_delete=models.CASCADE, related_name="categories")
     name = models.CharField(default=sheet.name, max_length=100)
     positive = models.BooleanField()
 
@@ -21,7 +21,7 @@ class FinanceCategory(models.Model):
 
 
 class FinanceSheetEntry(models.Model):
-    sheet = models.ForeignKey(FinanceSheet, on_delete=models.CASCADE)
+    sheet = models.ForeignKey(FinanceSheet, on_delete=models.CASCADE, related_name="entries")
     period = models.DateField()
     name = models.CharField(max_length=100)
 
@@ -44,7 +44,7 @@ class TemplatedRow(GenericFinanceRow):
         db_table = 'booker_templated_rows'
 
 class EntryRow(GenericFinanceRow):
-    entry = models.ForeignKey(FinanceSheetEntry, on_delete=models.CASCADE)
+    entry = models.ForeignKey(FinanceSheetEntry, on_delete=models.CASCADE, related_name="rows")
     description = models.CharField(blank=True, max_length=200)
     pinned = models.BooleanField(default=False)
     origin_amount = models.DecimalField(decimal_places=2, max_digits=20)

@@ -1,4 +1,74 @@
-<app-booker-table *ngFor="let entry of entries" [entry]="entry"></app-booker-table>
-<br>
-<br>
-<button class="btn btn-success" (click)="addEntrie();">Add table</button>
+<div class="h-100 sidenav" [@showHideSidebar]="settings.showSidebar ? 'show' : 'collapse'">
+    <div id="sidenav-content">
+
+        <div class="form-group">
+            <button type="button" 
+                class="btn btn-info fa fa-xs"
+                [ngClass]="settings.showSidebar ? 'fa-arrow-right' : 'fa-arrow-left' " 
+                (click)="changeSettings('showSidebar', !settings.showSidebar)">
+            </button>
+        </div>
+
+        <div *ngIf="settings.showSidebar">
+            <div class="form-group">
+                <div><label class="small">Show/hide</label></div>
+                <button 
+                    type="button" 
+                    class="btn fa fa-xs fa-calendar-alt"
+                    (click)="changeSettings('showCalendar', !settings.showCalendar)"
+                    [ngClass]="settings.showCalendar ? 'btn-info' : 'btn-secondary'">
+                </button>
+                <button 
+                    type="button" 
+                    class="btn fa fa-xs fa-chart-pie"
+                    (click)="changeSettings('showDiagrams', !settings.showDiagrams)"
+                    [ngClass]="settings.showDiagrams ? 'btn-info' : 'btn-secondary'">
+                </button>
+                <button 
+                    type="button" 
+                    class="btn fa fa-xs fa-calculator"
+                    (click)="changeSettings('showCalculator', !settings.showCalculator)"
+                    [ngClass]="settings.showCalculator ? 'btn-info' : 'btn-secondary'">
+                </button>
+            </div>
+
+            <hr>
+
+            <div class="form-group"><label class="small">Filters</label></div>
+            <div class="form-group">
+                <select class="form-control-sm">
+                    <option>Hello lalala</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <select class="form-control-sm">
+                    <option>Hello lalala</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <select class="form-control-sm">
+                    <option>Hello lalala</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <button type="button" class="btn btn-success fa-xs inline">Filter entries</button>
+                <button type="button" class="btn btn-success fa-xs inline float-right">Add entry</button>
+            </div>
+
+            <hr>
+            
+            <div class="form-group">
+                <label for="calculator" class="small">Calculator</label>
+                <textarea class="form-control" rows="2" placeholder="math expr.: 10*5.2+2" id="calculator"></textarea>
+            </div>
+            <div class="form-group">
+                <input class="form-control-sm" disabled id="calculator-total" value="=">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div [@sideBarNotCollapsed]="settings.showSidebar ? 'yes' : 'no'" class="tables-container">
+    <app-booker-table *ngFor="let entry of entries" [entry]="entry" class="table-container"></app-booker-table>
+</div>

@@ -5,7 +5,8 @@ EMAIL_HOST_PASSWORD = 'password'
 
 # Python
 ```sh
-cd django-app/staticfiles/v1/js
+cd django-app/staticfiles/v1/npm
+sudo apt-get install npm
 npm install 
 
 cd django-app
@@ -21,8 +22,6 @@ python manage.py runserver
 # Angular
 ```sh
 cd ng-app
-sudo apt-get install npm
-npm install -g @angular/cli
 npm install
 ng build
 ```

@@ -1,4 +1,4 @@
-<table class="table table-striped table-sm text-center">
+<table class="table table-sm text-center table-borderless table-transparent table-hover">
     <caption>
         <span class="fa fa-pencil-alt" style="color: slategrey;"></span> 
         <div style="width: 200px;" class="inline">
@@ -56,7 +56,7 @@
                 </select>
             </td>
             <td><input [(ngModel)]="newRow.amount" class="form-control-sm" smartFloatField></td>
-            <td><button class="btn btn-outline-success btn-sm fa fa-plus" (click)="addRow()"></button></td>
+            <td><button class="btn btn-outline-success fa fa-xs fa-plus" (click)="addRow()"></button></td>
         </tr>
         <tr *ngIf="!filters.deleted" class="total-row-tr">
             <td></td>

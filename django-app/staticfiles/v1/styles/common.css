@@ -8,3 +8,26 @@
 .inline {
     display: inline-block;
 }
+
+table.table-transparent input {
+    background-color: transparent;
+    outline: none;
+    outline-style: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: solid var(--secondary-color) 1px;
+}
+
+table.table-transparent input:focus {
+    -webkit-box-shadow: none;
+	-moz-box-shadow: none;
+    box-shadow: none;
+    border-bottom: solid var(--primary-color) 1px;
+}
+
+.modal-header {
+	background-color: var(--primary-color);
+	color: white;
+	border-bottom: var(--secondary-color) 5px solid;	
+}

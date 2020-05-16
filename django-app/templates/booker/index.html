@@ -13,14 +13,7 @@
 <script src="{% static 'main-es2015.js' %}" type="module"></script>
 <script src="{% static 'main-es5.js' %}" nomodule defer></script>
 <script src="{% url 'js_reverse' %}" type="text/javascript"></script>
-{% include 'common/sidenav.html' %}
-<style>
-    #tables-container {
-        padding-left: 50px;
-        width: 65%;
-    }
-</style>
-<div align="left" id="tables-container">
-    <app-root></app-root>
-</div>
+
+<app-root></app-root>
+
 {% endblock %}
