@@ -10,13 +10,15 @@ from profiles.constants import ERROR_IS_NOT_DEMO_USER
 from profiles.models import User
 
 class UserModelViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
     serializer_class = UserAPISerializer
     
     def get_permissions(self):
         if self.action == 'create':
-            return [AllowAny(), ]        
+            return [AllowAny()]        
         return super(UserModelViewSet, self).get_permissions()
+
+    def get_queryset(self):
+        return User.objects.filter(pk=self.request.user.pk)
 
     @action(detail=False, methods=['post'])
     def create_from_demo_user(self, request):

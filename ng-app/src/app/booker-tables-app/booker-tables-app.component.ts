@@ -12,7 +12,7 @@ import {trigger,state,style,animate,transition} from '@angular/animations';
         width: '250px'
       })),
       state('collapse', style({
-        width: '100px',
+        width: '50px',
       })),
       transition('show => collapse', [
         animate('0.2s')
@@ -24,7 +24,7 @@ import {trigger,state,style,animate,transition} from '@angular/animations';
 
     trigger('sideBarNotCollapsed', [
       state('no', style({
-        width: '90%'
+        width: '95%'
       })),
       state('yes', style({
         width: '80%',

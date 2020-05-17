@@ -5,15 +5,6 @@
     right: 0;
 }
 
-#sidenav-content {
-    padding: 25px;
-}
-
-
-.tables-container {
-    padding: 50px;
-}
-
 .sidenav hr {
     background-color: var(--secondary-color);
 }

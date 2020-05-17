@@ -13,6 +13,7 @@ import { BookerEntriesAPI } from './services/http';
 import { CookieService } from "angular2-cookie/services/cookies.service";
 import { smartFloatFieldDirective } from "./services/directives";
 import { filterObjectsByPropertyPipe } from "./services/pipes";
+import { CalculatorComponent } from './calculator/calculator.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { filterObjectsByPropertyPipe } from "./services/pipes";
     BookerEntriesAppComponent,
     BookerEntrieComponent,
     smartFloatFieldDirective,
-    filterObjectsByPropertyPipe
+    filterObjectsByPropertyPipe,
+    CalculatorComponent
   ],
   imports: [
     BrowserAnimationsModule,

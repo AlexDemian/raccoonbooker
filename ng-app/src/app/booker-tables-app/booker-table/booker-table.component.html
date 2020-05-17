@@ -4,11 +4,11 @@
         <div style="width: 200px;" class="inline">
             <b><input class="form-control" [(ngModel)]="entry.name"/></b>
         </div>
-        <button class="btn btn-outline-info fa" style="margin-left: 50px;"
+        <button class="ml-5 btn btn-outline-info fa"
             [ngClass]="filters.deleted ? 'fa-list-ul' : 'fa-history'" 
             (click)="filters.deleted = !filters.deleted">
         </button>
-        <button class="btn btn-outline-danger fa fa-trash" style="margin-left: 5px;"></button>
+        <button class="ml-1 btn btn-outline-danger fa fa-trash"></button>
     </caption>
     <thead>
         <tr *ngIf="!filters.deleted" class="total-row-tr">
@@ -16,7 +16,7 @@
             <td>Earnings: {{ calculations.incomesSum }}</td>
             <td>Costs: {{ calculations.outcomesSum }}</td>
             <td></td>
-            <td>Total: {{ calculations.totalSum }}</td>
+            <td [ngClass]="{'text-success': calculations.totalSum >= 0, 'text-danger': calculations.totalSum < 0}">Total: {{ calculations.totalSum }}</td>
             <td></td>
         <tr>
         <tr>
@@ -58,6 +58,9 @@
             <td><input [(ngModel)]="newRow.amount" class="form-control-sm" smartFloatField></td>
             <td><button class="btn btn-outline-success fa fa-xs fa-plus" (click)="addRow()"></button></td>
         </tr>
+
+    </tbody>
+    <thead>
         <tr *ngIf="!filters.deleted" class="total-row-tr">
             <td></td>
             <td>Earnings: {{ calculations.incomesSum }}</td>
@@ -66,5 +69,5 @@
             <td [ngClass]="{'text-success': calculations.totalSum >= 0, 'text-danger': calculations.totalSum < 0}">Total: {{ calculations.totalSum }}</td>
             <td></td>
         <tr>
-    </tbody>
+    </thead>
 </table>
