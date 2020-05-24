@@ -22,7 +22,8 @@ class FinanceCategory(models.Model):
 
 class FinanceSheetEntry(models.Model):
     sheet = models.ForeignKey(FinanceSheet, on_delete=models.CASCADE, related_name="entries")
-    period = models.DateField()
+    date_from = models.DateField()
+    date_to = models.DateField()
     name = models.CharField(max_length=100)
 
     class Meta:

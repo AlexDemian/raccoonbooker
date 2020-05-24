@@ -16,8 +16,9 @@ export class CalculatorComponent implements OnInit {
   total = '= ...';
 
   calculate() {
+    let expression = this.expression.replace(",",".");
     try {
-      this.total = "= " + eval(this.expression);
+      this.total = "= " + eval(expression);
     } 
     catch {
       this.total = '= ...';

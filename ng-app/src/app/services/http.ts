@@ -1,8 +1,9 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CookieService } from "angular2-cookie/core";
 import { Urls } from '../externalJs/django_js_reverse/js/reverse.js';
+import { datePickerDateObjectToString } from './common';
 
 export class Entry{
     id: number;
@@ -40,8 +41,16 @@ export class BookerEntriesAPI{
         return this._cookieService.get(key);
     }
 
-    getEntries(): Observable<any> {
-        return this.http.get(Urls['api-entries-list'](), {headers: this.httpHeaders})
+    getEntries(filters): Observable<any> {
+        
+        let options = {
+            headers: this.httpHeaders,
+            params: {
+                'date_from__gte': datePickerDateObjectToString(filters.dateFrom),
+                'date_to__lte': datePickerDateObjectToString(filters.dateTo),
+            }
+        }
+        return this.http.get(Urls['api-entries-list'](), options)
     }
 
     addEntry(entry): Observable<any> {
@@ -53,7 +62,6 @@ export class BookerEntriesAPI{
     }
 
     addRow(row): Observable<any> {
-        console.log('Pushed row', row)
         return this.http.post(Urls['api-rows-list'](), row, {headers: this.httpHeaders});
     }
 

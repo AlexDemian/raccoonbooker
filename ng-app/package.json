@@ -20,6 +20,7 @@
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
     "@babel/compat-data": "^7.9.0",
+    "angular-mydatepicker": "^0.9.1",
     "angular2-cookie": "^1.2.6",
     "rxjs": "~6.4.0",
     "tslib": "^1.11.1",

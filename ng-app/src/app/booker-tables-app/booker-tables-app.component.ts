@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BookerEntriesAPI, Entry } from '../services/http';
+import { CookedSettingsManager, datePickerSettings } from '../services/settingsManager';
 import {trigger,state,style,animate,transition} from '@angular/animations';
+
 
 @Component({
   selector: 'app-booker-tables-app',
@@ -42,21 +44,31 @@ export class BookerEntriesAppComponent implements OnInit {
   ngOnInit () {}
   
   entries: Entry [] = [];
+  settings: Object = {};
+  apiFilters: Object = {};
+  datePickerOptions = datePickerSettings;
+
+  constructor(
+    private api: BookerEntriesAPI, 
+    private settingsManager: CookedSettingsManager,
+  ) {
+    this.apiFilters = this.settingsManager.getApiFilters()
+    this.settings = this.settingsManager.getSettings()
+    this.getEntries();
+  }
   
-  constructor(private api: BookerEntriesAPI) {
-    this.api.getEntries().subscribe( data => { this.entries = data as Entry[] });
+  ngDoCheck() {
+    this.settingsManager.saveSettingsAndFiltersAtCookies(this.settings, this.apiFilters);
   }
 
-  settings = {
-    showDiagrams: true,
-    showCalculator: true, 
-    showCalendar: true,
-    showSidebar: true,
+  getEntries() {
+    this.api.getEntries(this.apiFilters).subscribe( data => { this.entries = data as Entry[] });
   }
 
-  changeSettings(property, value) { 
-    this.settings[property] = value;
-    // TODO : push put to server
-  }
+  updateEntry() {}
+
+  addEntry() {}
+
+  deleteEntry() {}
 
 }

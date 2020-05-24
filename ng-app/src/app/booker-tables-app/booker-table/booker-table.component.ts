@@ -71,7 +71,7 @@ export class BookerEntrieComponent implements OnInit {
 
   updateRow(row) {
     console.log('Updated: ', row);
-    row = this.api.updateRow(row).subscribe(
+    this.api.updateRow(row).subscribe(
       data => {
         row = data as EntryRow;
       },

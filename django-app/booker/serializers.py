@@ -27,9 +27,13 @@ class FinanceSheetEntryApiSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         # ToDo: resolve multiple call issue
-        if isinstance(instance.period, datetime.date):
-            instance.period = instance.period.strftime("%B %Y")
-        return super(FinanceSheetEntryApiSerializer, self).to_representation(instance)
+        for field in ['date_from', 'date_to']:
+            value = getattr(instance, field)
+            if not isinstance(value,  datetime.date):
+                continue
+            value = value.strftime("%B %d, %Y")
+            setattr(instance, field, value)
+        return super().to_representation(instance)
 
     def get_categories(self, instance):
         return FinanceCategoryApiSerializer(

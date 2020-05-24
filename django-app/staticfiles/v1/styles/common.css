@@ -9,6 +9,20 @@
     display: inline-block;
 }
 
+.modal-header {
+	background-color: var(--primary-color);
+	color: white;
+	border-bottom: var(--secondary-color) 5px solid;	
+}
+
+input:disabled {
+	background-color: white;
+}
+
+input.form-control-sm {
+	border-radius: 5px;
+}
+
 table.table-transparent input {
     background-color: transparent;
     outline: none;
@@ -24,10 +38,4 @@ table.table-transparent input:focus {
 	-moz-box-shadow: none;
     box-shadow: none;
     border-bottom: solid var(--primary-color) 1px;
-}
-
-.modal-header {
-	background-color: var(--primary-color);
-	color: white;
-	border-bottom: var(--secondary-color) 5px solid;	
 }

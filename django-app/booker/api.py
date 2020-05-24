@@ -17,14 +17,18 @@ class ObjectPermissionedModelViewSet(viewsets.ModelViewSet):
 class FinanceEntryViewSet(ObjectPermissionedModelViewSet):
     model = FinanceSheetEntry
     serializer_class = FinanceSheetEntryApiSerializer
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['period', 'sheet']
+    filterset_fields = {
+        'name': ['icontains'],
+        'date_from': ['gte', 'lte', 'exact'],
+        'date_to': ['gte', 'lte', 'exact'],
+        'sheet': ['exact']
+    }
     permission_classes = [isSheetOwner, IsAuthenticated]
 
     def get_queryset(self):
         return FinanceSheetEntry.objects.filter(
             sheet__user=self.request.user
-        ).order_by('period')
+        ).order_by('date_from')
 
 
 class FinanceCategoryViewSet(ObjectPermissionedModelViewSet):

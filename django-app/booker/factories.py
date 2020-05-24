@@ -2,6 +2,7 @@ import random
 import names
 import datetime
 import time
+from dateutil import relativedelta
 
 from django.contrib.auth import get_user_model
 from django.utils.crypto import get_random_string
@@ -42,8 +43,9 @@ class FinanceCategoryFactory(factory.django.DjangoModelFactory):
 class FinanceSheetEntryFactory(factory.django.DjangoModelFactory):
     sheet = factory.SubFactory(FinanceSheetFactory)
     name = 'New sheet entry'
-    period = datetime.datetime.now()
-
+    date_from = datetime.datetime.now()
+    date_to =  datetime.datetime.now() + relativedelta.relativedelta(months=1)
+    
     class Meta:
         model = FinanceSheetEntry
 
